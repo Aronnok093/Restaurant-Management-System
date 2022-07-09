@@ -1,2 +1,2 @@
-jdbc:sqlserver://DESKTOP-OECCDJF\SQLEXPRESS;databaseName=RMS
-https://sqlserverbuilds.blogspot.com/2021/06/sql-server-jdbc-driver-versions.html
+path sample: jdbc:sqlserver://DESKTOP-OECCDJF\SQLEXPRESS;databaseName=RMS
+JDBC Download Link: https://sqlserverbuilds.blogspot.com/2021/06/sql-server-jdbc-driver-versions.html
