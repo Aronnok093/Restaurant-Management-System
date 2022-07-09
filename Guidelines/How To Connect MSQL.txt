@@ -1,0 +1,53 @@
+Before You Got Fuck Up Please fallow My Steps.
+Primary:
+	Step-1: Go to Sql server Configuration Nanager
+	Step-2:Sql server network configuration->protocols for (Your Database Server Name)
+	Step-3:TCP/IP Enable
+	Step-4:Open TCP/IP Properties;
+	Step-5:IP Addresses
+	Step-6: Scroll down to IPALL section and make sure that TCP Port is 1433 if not then write it and press ok.
+	Step-7:Go to your windows search box and search for services 
+	Step-8:Open services
+	Step-9:Find SQL Server Browser and then properties
+	Step-10:Startup Type:Automatic(only automatic) and press start and then ok.
+	Step-11:Open Your SQL Server where you press your sa login password from there just copy Server Name( u will need this trust me (^_^)  ).
+	Step-12:Restart your database and your machine I mean PC.
+
+
+->Now Create a Database in MSQL and a Table
+
+->ADD JDBC Driver or JDBC jar file what ever u say in your project libary.(YouTube:"How to add jar file in neatbeans project")
+Close your netbeans after added jar file bc sometimes this shit old version gives error no suitable version found.
+
+->****But Remeber choose proper version for your JDBC jar file according to your jdk version with windows and fking msql version.
+
+[Netbeans 8.2 with jdk 1.8 or java 8 will work with JBDC 4_2 version tested by me] (But MS just remove this version from their server so do cry)
+
+->fallow this path in project github directory->Tools\JDBC\sqljdbc_6.0\enu\jre8->JBDC_42---I'm Here
+
+
+TEST CODE:
+	Before test create a database add some value in it.
+
+ try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=I dont know your database name","sa","password");
+            Statement stmt = conn.createStatement();
+            String qrry = "select * from YourFinking_Table_Name where Coloumn_name= coloumn_value"
+            ResultSet rs = stmt.executeQuery(qrry);
+            while(rs.next()){
+               String TheColoumnValueYouWant = rs.getString("TheColoumnValueYouWant"); 
+               JOptionPane.showMessageDialog(rootPane,TheColoumnValueYouWant);
+			System.out.Println(NAME);
+            }
+        }catch(ClassNotFoundException | SQLException ex){
+            JOptionPane.showMessageDialog(rootPane,ex);
+        }
+
+
+
+if you find error call me: 01724615130
+Thank You bc ur the real hero. yes
+
+
+
