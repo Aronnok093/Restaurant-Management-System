@@ -54,29 +54,60 @@ public final class LoginUI extends javax.swing.JFrame {
    void LoginCall(){ //10/07/2022 ARONOCK LOGIN PANEL THROUGH DATABASE
         boolean flag = false;
         String loginType=loginTypeComboBox.getSelectedItem().toString();
-        try{
-             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
-            Statement stmt = conn.createStatement();
-            String qrry;
-            qrry = "select * from "+loginType+" WHERE A_ID="+loginID.getText() +" AND PASSWORD ="+loginPassword.getText()+";";
-            ResultSet rs = stmt.executeQuery(qrry);
-            while(rs.next()){
-               flag=true;
-               String NAME = rs.getString("NAME");
-               //JOptionPane.showMessageDialog(rootPane,NAME);
-            }
-            if(flag){
-                JOptionPane.showMessageDialog(null, "Successfully Logged In (*^*):");
-                System.out.print(qrry);
+        if("ADMIN".equals(loginType)){
+            try{
+                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "select * from "+loginType+" WHERE A_ID="+loginID.getText() +" AND PASSWORD ="+loginPassword.getText()+";";
+                ResultSet rs = stmt.executeQuery(qrry);
+                while(rs.next()){
+                   flag=true;
+                   //String NAME = rs.getString("NAME");
+                   //JOptionPane.showMessageDialog(rootPane,NAME);
                 }
-            else{
-                JOptionPane.showMessageDialog(null, "Invalid User-Name or Password");
-                System.out.print(qrry);
+                if(flag){
+                    JOptionPane.showMessageDialog(null, "Successfully Logged In (^_*)");
+                    //System.out.print(qrry);
+                    }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid User-ID or Password (o_O) ");
+                    //System.out.print(qrry);
+                    }
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
                 }
-        }catch(HeadlessException | ClassNotFoundException | SQLException ex){
-            JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
         }
+        else if("CUSTOMER".equals(loginType)){
+            
+            try{
+                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "select * from "+loginType+" WHERE CUSTOMER_ID="+loginID.getText() +" AND PASSWORD ="+loginPassword.getText()+";";
+                ResultSet rs = stmt.executeQuery(qrry);
+                while(rs.next()){
+                   flag=true;
+                   //String NAME = rs.getString("NAME");
+                   //JOptionPane.showMessageDialog(rootPane,NAME);
+                }
+                if(flag){
+                    JOptionPane.showMessageDialog(null, "Successfully Logged In (^_*)");
+                    //System.out.print(qrry);
+                    }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid User-ID or Password (o_O) ");
+                    //System.out.print(qrry);
+                    }
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+        }
+        //To make login fild empty for sequrity security reason 10/07/2022 ARONOCK
+        loginID.setText(null);
+        loginPassword.setText(null);
     }
     
 
@@ -148,8 +179,6 @@ public final class LoginUI extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("PASSWORD");
-
-        loginPassword.setText("jPasswordField1");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setText("USER ID");

@@ -189,9 +189,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JPasswordField" name="loginPassword">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jPasswordField1"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
