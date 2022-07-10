@@ -123,6 +123,7 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
         MenuDetails = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -473,6 +474,7 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
         bindingGroup.bind();
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPriceActionPerformed
