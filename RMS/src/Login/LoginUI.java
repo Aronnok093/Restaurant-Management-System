@@ -38,18 +38,6 @@ public final class LoginUI extends javax.swing.JFrame {
         Date d=new Date();
         SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd");
         jDate.setText(s.format(d)); // show date in Login Panel
-        /*
-        SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
-        String day = dayFormat.format(d);
-
-        SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-        String month = monthFormat .format(d);
-        
-        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-        String year = yearFormat .format(d);
-        
-        System.out.println(day+" "+month+" "+year);
-        */
     }
     //To show System time 10/07/2022 ARONOCK
     void showTime(){
