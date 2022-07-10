@@ -83,7 +83,7 @@ public final class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
                 }
     }
-    
+    //11/07/2022 ADMIN CAN SEARCH FOOD BY ITS PRICE
     void searchByPrice(){
         DefaultTableModel MenuDetail =(DefaultTableModel)MenuDetails.getModel();
         MenuDetail.setRowCount(0);
@@ -109,6 +109,7 @@ public final class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
                 }
         jPrice.setText(null);
     }
+    //11/07/2022 ADMIN CAN SEARCH FOOD BY ITS CATEGORY
     void searchByCategory(){
         DefaultTableModel MenuDetail =(DefaultTableModel)MenuDetails.getModel();
         MenuDetail.setRowCount(0);
@@ -557,7 +558,7 @@ public final class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
-        menuList();
+        menuList(); // ALL FOOD WILL SHOW ARONOCK 22/07/2022
         
     }//GEN-LAST:event_resetButtonActionPerformed
 
@@ -576,7 +577,7 @@ public final class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
 
     private void AddToMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddToMenuButtonActionPerformed
         // TODO add your handling code here:
-         AddMenuCall();
+         AddMenuCall(); // NEW FOOD WILL ADD AND IT WILL SHOW IN MENU LIST ARONOCK 22/07/2022
     }//GEN-LAST:event_AddToMenuButtonActionPerformed
 
     private void VeryHotRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VeryHotRadioButtonActionPerformed
