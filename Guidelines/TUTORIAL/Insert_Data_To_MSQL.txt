@@ -1,0 +1,20 @@
+try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+            Statement stmt = conn.createStatement();
+            String qrry;
+            qrry = "INSERT INTO FOOD_MENU VALUES("+"'"+DishID.getText()+"'"+","+"'"+DishName.getText()+"'"+","+"'"+categoryComboBox.getSelectedItem().toString()+"'"+","+"'"+spiciness.getSelection().getActionCommand()+"'"+","+Price.getText()+");";
+            boolean gotResults=stmt.execute(qrry);
+            ResultSet rs = null;
+            if(!gotResults){
+                System.out.println("No results returned");
+            }
+            else {
+                rs = stmt.getResultSet();
+                }
+            
+            JOptionPane.showMessageDialog(rootPane,"Done");
+            
+        }catch(ClassNotFoundException | SQLException ex){
+            JOptionPane.showMessageDialog(rootPane,ex);
+        }
