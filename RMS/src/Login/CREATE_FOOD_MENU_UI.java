@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author kfard
  */
-public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
+public final class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
 
     /**
      * Creates new form FOOD_MENU_UI
@@ -29,8 +29,7 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
     }
     
     void AddMenuCall(){ //10/07/2022 ARONOCK ADD FOOD TO THE MENU
-        DefaultTableModel MenuDetail =(DefaultTableModel)MenuDetails.getModel();
-        MenuDetail.setRowCount(0);
+        
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
@@ -56,6 +55,8 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
         DishID.setText(null);
         DishName.setText(null);
         Price.setText(null);
+        // To show update menulist
+        menuList();
     }
     //10/07/2022 ARONOCK SHOW FOOD FROM THE MENU DATABASE
     void menuList(){
@@ -82,6 +83,57 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
                 }
     }
+    
+    void searchByPrice(){
+        DefaultTableModel MenuDetail =(DefaultTableModel)MenuDetails.getModel();
+        MenuDetail.setRowCount(0);
+        
+        try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "select * from FOOD_MENU WHERE PRICE >="+jPrice.getText()+";";
+                ResultSet rs = stmt.executeQuery(qrry);
+                while(rs.next()){
+                    String DISH_ID = rs.getString("DISH_ID");
+                    String DISH_NAME = rs.getString("DISH_NAME");
+                    String CATEGORY = rs.getString("CATEGORY");
+                    String SPICINESS = rs.getString("SPICINESS");
+                    int    PRICE = rs.getInt("PRICE");
+               
+                    MenuDetail.addRow(new Object[]{DISH_ID ,DISH_NAME,CATEGORY,SPICINESS,PRICE});
+                }
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+        jPrice.setText(null);
+    }
+    void searchByCategory(){
+        DefaultTableModel MenuDetail =(DefaultTableModel)MenuDetails.getModel();
+        MenuDetail.setRowCount(0);
+        
+        try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "select * from FOOD_MENU WHERE CATEGORY ="+"'"+sCategoryComboBox.getSelectedItem().toString()+"'"+";";
+                ResultSet rs = stmt.executeQuery(qrry);
+                while(rs.next()){
+                    String DISH_ID = rs.getString("DISH_ID");
+                    String DISH_NAME = rs.getString("DISH_NAME");
+                    String CATEGORY = rs.getString("CATEGORY");
+                    String SPICINESS = rs.getString("SPICINESS");
+                    int    PRICE = rs.getInt("PRICE");
+               
+                    MenuDetail.addRow(new Object[]{DISH_ID ,DISH_NAME,CATEGORY,SPICINESS,PRICE});
+                }
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+        jPrice.setText(null);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,11 +150,11 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jPrice = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        sCategoryComboBox = new javax.swing.JComboBox<>();
+        sFoodByPrice = new javax.swing.JButton();
+        sFoodByCategory = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -118,6 +170,7 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         Price = new javax.swing.JTextField();
         AddToMenuButton = new javax.swing.JButton();
+        NullRadioButton = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         MenuDetails = new javax.swing.JTable();
@@ -144,22 +197,22 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel7.setText("Category");
 
-        jComboBox2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Beef", "Lamb", "Chicken", "Pork", "Vegetable" }));
+        sCategoryComboBox.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        sCategoryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Beef", "Lamb", "Chicken", "Pork", "Vegetable", "Beverage", "Watter", "Milk", "Hot Drink", "Fruit Juice", "Soup", "Rice", "Dry Food", "Null" }));
 
-        jButton3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButton3.setText("Search Food By Price");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        sFoodByPrice.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        sFoodByPrice.setText("Search Food By Price");
+        sFoodByPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                sFoodByPriceActionPerformed(evt);
             }
         });
 
-        jButton5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButton5.setText("Search Food By category");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        sFoodByCategory.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        sFoodByCategory.setText("Search Food By category");
+        sFoodByCategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                sFoodByCategoryActionPerformed(evt);
             }
         });
 
@@ -173,13 +226,13 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(sCategoryComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(sFoodByPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
+                    .addComponent(sFoodByCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
         );
         jPanel3Layout.setVerticalGroup(
@@ -190,20 +243,20 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sFoodByPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sCategoryComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sFoodByCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
         );
 
-        jButton2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButton2.setText("Reset");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        resetButton.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        resetButton.setText("Reset");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                resetButtonActionPerformed(evt);
             }
         });
 
@@ -221,7 +274,7 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(113, 113, 113))
@@ -231,7 +284,7 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
@@ -257,7 +310,7 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
         jLabel3.setText("Category");
 
         categoryComboBox.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        categoryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Beef", "Lamb", "Chicken", "Pork", "Vegetable" }));
+        categoryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Beef", "Lamb", "Chicken", "Pork", "Vegetable", "Beverage", "Watter", "Milk", "Hot Drink", "Fruit Juice", "Soup", "Rice", "Dry Food", "Null" }));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel4.setText("Spiciness");
@@ -304,6 +357,12 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
             }
         });
 
+        spiciness.add(NullRadioButton);
+        NullRadioButton.setText("Null");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, NullRadioButton, org.jdesktop.beansbinding.ELProperty.create("${actionCommand}"), NullRadioButton, org.jdesktop.beansbinding.BeanProperty.create("actionCommand"));
+        bindingGroup.addBinding(binding);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -331,9 +390,11 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
                                 .addGap(16, 16, 16)
                                 .addComponent(MildRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(HotRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(HotRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(NullRadioButton))
                             .addComponent(AddToMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,7 +416,8 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(VeryHotRadioButton)
                     .addComponent(MildRadioButton)
-                    .addComponent(HotRadioButton))
+                    .addComponent(HotRadioButton)
+                    .addComponent(NullRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -481,20 +543,23 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPriceActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void sFoodByPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sFoodByPriceActionPerformed
         // TODO add your handling code here:
+        searchByPrice();
         
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_sFoodByPriceActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void sFoodByCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sFoodByCategoryActionPerformed
         // TODO add your handling code here:
+        searchByCategory();
         
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_sFoodByCategoryActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
+        menuList();
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_resetButtonActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -559,14 +624,11 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
     private javax.swing.JRadioButton HotRadioButton;
     private javax.swing.JTable MenuDetails;
     private javax.swing.JRadioButton MildRadioButton;
+    private javax.swing.JRadioButton NullRadioButton;
     private javax.swing.JTextField Price;
     private javax.swing.JRadioButton VeryHotRadioButton;
     private javax.swing.JComboBox<String> categoryComboBox;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -581,6 +643,10 @@ public class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jPrice;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton resetButton;
+    private javax.swing.JComboBox<String> sCategoryComboBox;
+    private javax.swing.JButton sFoodByCategory;
+    private javax.swing.JButton sFoodByPrice;
     private javax.swing.ButtonGroup spiciness;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
