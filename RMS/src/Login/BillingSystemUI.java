@@ -79,19 +79,19 @@ public final class BillingSystemUI extends javax.swing.JFrame {
         ID=C_ID;
         Role="CASHIER";
     }
-    void setVat(int vat){
+    void setVat(int vat){ // SETTER METHOD FOR VAT
         this.vat=vat;
     }
     /*getter method*/
-    public String getYear(){
+    public String getYear(){  // TO GET CURRENT YEAR
         return year;
     }
     
-    public String getDay(){
+    public String getDay(){  // TO GET CURRENT DAY
         return day;
     }
     
-    public String getMonth(){
+    public String getMonth(){ // TO GET CURRENT MONTH
         return month;
     }
     
