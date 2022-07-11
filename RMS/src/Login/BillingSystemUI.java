@@ -41,6 +41,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
     private String year;
     private String time;
     private String date;
+    private int vat=2;
     public BillingSystemUI() {
         initComponents();
         updateCombooD();
@@ -78,7 +79,9 @@ public final class BillingSystemUI extends javax.swing.JFrame {
         ID=C_ID;
         Role="CASHIER";
     }
-    
+    void setVat(int vat){
+        this.vat=vat;
+    }
     /*getter method*/
     public String getYear(){
         return year;
@@ -216,10 +219,10 @@ public final class BillingSystemUI extends javax.swing.JFrame {
     }
     
     void FinalBillInfo(){
-         PayableAmount.setText(String.valueOf(tPrice));
+         PayableAmount.setText(String.valueOf(tPrice+tPrice*(double)((vat*1.0)/100)));
          String Paid= paid.getText();
          int iPaid=Integer.parseInt(Paid);
-         int cashBack= iPaid-tPrice;
+         int cashBack= (int) (iPaid-tPrice-tPrice*(double)((vat*1.0)/100));
          CashBack.setText(String.valueOf(cashBack));
          String serverID=ServerID.getText();
          String Table= TableNumbers.getText();
@@ -233,7 +236,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
          else{
              CustomerID=NewCustomerPhone.getText();
          }
-         ToBills(CustomerID,serverID,ID,tPrice,paymentMethod,year,month,time);
+         ToBills(CustomerID,serverID,ID, (int) (tPrice+tPrice*(double)((vat*1.0)/100)),paymentMethod,year,month,time);
          ToTableS(serverID,Table,CustomerID);
          printBill(CustomerID);
     }
@@ -289,24 +292,26 @@ public final class BillingSystemUI extends javax.swing.JFrame {
                 Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
                 Statement stmt = conn.createStatement();
                 String qrry;
-                qrry = "SELECT SUM(TOTAL) AS TotalBill FROM TEMP_BILL;";
+                qrry = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID ="+"'"+OldCustomerID.getText()+"';";
                 ResultSet rs = stmt.executeQuery(qrry);
                 //rs.next();
                 while(rs.next()){
-                    String s=rs.getString("CREDITE");
+                    String s=rs.getString("CREDIT");
                     credite=Integer.parseInt(s);
-                    System.out.println(credite);
+                   // System.out.println(credite);
                 }
             }catch(HeadlessException | ClassNotFoundException | SQLException ex){
                 JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
                 }
     }
     void customer(){ // credite will be update to the old customer and for new customer new account will be created
-       String M_ID= Membership.getSelection().getActionCommand();
+        readFromCustomer();
+        String M_ID= Membership.getSelection().getActionCommand();
        if("Yes".equals(M_ID)){
-           int sum=credite+tPrice;
-           System.out.println("Yes");
-           System.out.println("->"+sum);
+           int tmp=(int) (tPrice+tPrice*(double)((vat*1.0)/100));
+           int sum=credite+tmp;
+           //System.out.println("Yes"+tmp);
+           //System.out.println("->"+credite);
            try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
@@ -387,19 +392,19 @@ public final class BillingSystemUI extends javax.swing.JFrame {
         pBill.setText(pBill.getText()+"Time: "+time+"\n");
         pBill.setText(pBill.getText()+"Cashier ID: "+ID+"\n");
         pBill.setText(pBill.getText()+"Customer ID: "+CustomerID+"\n");
-        pBill.setText(pBill.getText()+"=========================================================\n");
+        pBill.setText(pBill.getText()+"=========================RMS======================================\n");
         DefaultTableModel MenuDetail =(DefaultTableModel)OrderList.getModel();
         //MenuDetail.setRowCount(0);
-        pBill.setText(pBill.getText()+"ITEM"+"\t\t"+"QUANTITY"+"\t\t"+"UNIT_PRICE"+"\t\t"+"TOTAL"+"\n");
+        pBill.setText(pBill.getText()+"ITEM"+"\t"+"QUANTITY"+"\t"+"UNIT_PRICE"+"\t"+"TOTAL"+"\n");
         for(int i=0;i<OrderList.getRowCount();i++){
             String ITEM= OrderList.getValueAt(i,0).toString();
             String QUANTITY= OrderList.getValueAt(i,1).toString();
             String UNIT_PRICE= OrderList.getValueAt(i,2).toString();
             String TOTAL= OrderList.getValueAt(i,3).toString();
-         pBill.setText(pBill.getText()+ITEM+"\t\t"+QUANTITY+"\t\t"+UNIT_PRICE+"\t\t"+TOTAL+"\n");
+         pBill.setText(pBill.getText()+ITEM+"\t"+QUANTITY+"\t"+UNIT_PRICE+"\t"+TOTAL+"\n");
         }
-        pBill.setText(pBill.getText()+"==========================================================\n");
-        pBill.setText(pBill.getText()+"Total Bill:"+String.valueOf(tPrice)+"\n");
+        pBill.setText(pBill.getText()+"===========================Thank You================================\n");
+        pBill.setText(pBill.getText()+"Total Bill:"+String.valueOf(tPrice+tPrice*(double)((vat*1.0)/100))+" ("+vat+"%Vat Included)\n");
         pBill.setText(pBill.getText()+"Payment Method:"+PaymentMethodComboBox.getSelectedItem().toString()+"\n");
         
         
@@ -633,17 +638,14 @@ public final class BillingSystemUI extends javax.swing.JFrame {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(paid, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(CashBack, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jDate)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(48, 48, 48)
-                                .addComponent(jLabel12)))
-                        .addGap(18, 18, 18))
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(paid, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CashBack, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDate)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(jLabel12))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9)
@@ -803,30 +805,30 @@ public final class BillingSystemUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, 0)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(0, 0, 0)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -858,7 +860,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         TotalBIll();
         customer();
-        PayableAmount.setText(String.valueOf(tPrice));
+        PayableAmount.setText(String.valueOf(tPrice+tPrice*(double)((vat*1.0)/100)));
     }//GEN-LAST:event_SubmitCustomerInfoActionPerformed
 
     private void DeleteAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteAllActionPerformed
@@ -910,10 +912,8 @@ public final class BillingSystemUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BillingSystemUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new BillingSystemUI().setVisible(true);
         });
     }
 
