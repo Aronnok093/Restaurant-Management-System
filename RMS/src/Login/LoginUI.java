@@ -104,6 +104,88 @@ public final class LoginUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
                 }
         }
+        else if("CASHIER".equals(loginType)){
+            
+            try{
+                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "select * from "+loginType+" WHERE C_ID="+loginID.getText() +" AND PASSWORD ="+loginPassword.getText()+";";
+                ResultSet rs = stmt.executeQuery(qrry);
+                while(rs.next()){
+                   flag=true;
+                   //String NAME = rs.getString("NAME");
+                   //JOptionPane.showMessageDialog(rootPane,NAME);
+                }
+                if(flag){
+                    JOptionPane.showMessageDialog(null, "Successfully Logged In (^_*)");
+                    //System.out.print(qrry);
+                    dispose();
+                    BillingSystemUI tmp = new BillingSystemUI();
+                    tmp.setVisible(true);
+                    tmp.setCashierID(loginID.getText());
+                    }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid User-ID or Password (o_O) ");
+                    //System.out.print(qrry);
+                    }
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+        }
+        else if("EMPLOYEE".equals(loginType)){
+            
+            try{
+                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "select * from "+loginType+" WHERE E_ID="+loginID.getText() +" AND PASSWORD ="+loginPassword.getText()+";";
+                ResultSet rs = stmt.executeQuery(qrry);
+                while(rs.next()){
+                   flag=true;
+                   //String NAME = rs.getString("NAME");
+                   //JOptionPane.showMessageDialog(rootPane,NAME);
+                }
+                if(flag){
+                    JOptionPane.showMessageDialog(null, "Successfully Logged In (^_*)");
+                    //System.out.print(qrry);
+                    }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid User-ID or Password (o_O) ");
+                    //System.out.print(qrry);
+                    }
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+        }
+        else if("MANEGER".equals(loginType)){
+            
+            try{
+                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "select * from "+loginType+" WHERE M_ID="+loginID.getText() +" AND PASSWORD ="+loginPassword.getText()+";";
+                ResultSet rs = stmt.executeQuery(qrry);
+                while(rs.next()){
+                   flag=true;
+                   //String NAME = rs.getString("NAME");
+                   //JOptionPane.showMessageDialog(rootPane,NAME);
+                }
+                if(flag){
+                    JOptionPane.showMessageDialog(null, "Successfully Logged In (^_*)");
+                    //System.out.print(qrry);
+                    }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid User-ID or Password (o_O) ");
+                    //System.out.print(qrry);
+                    }
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+        }
         //To make login fild empty for sequrity security reason 10/07/2022 ARONOCK
         loginID.setText(null);
         loginPassword.setText(null);
