@@ -32,7 +32,8 @@ public final class CREATE_FOOD_MENU_UI extends javax.swing.JFrame {
         
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+            //Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+            Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
             Statement stmt = conn.createStatement();
             String qrry;
             qrry = "INSERT INTO FOOD_MENU VALUES("+"'"+DishID.getText()+"'"+","+"'"+DishName.getText()+"'"+","+"'"+categoryComboBox.getSelectedItem().toString()+"'"+","+"'"+spiciness.getSelection().getActionCommand()+"'"+","+Price.getText()+");";
