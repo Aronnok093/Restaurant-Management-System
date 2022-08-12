@@ -158,6 +158,9 @@ public final class LoginUI extends javax.swing.JFrame {
                 if(flag){
                     JOptionPane.showMessageDialog(null, "Successfully Logged In (^_*)");
                     //System.out.print(qrry);
+                    dispose();
+                    EmployeeUI emp = new EmployeeUI();
+                    emp.setVisible(true);
                     }
                 else{
                     JOptionPane.showMessageDialog(null, "Invalid User-ID or Password (o_O) ");
