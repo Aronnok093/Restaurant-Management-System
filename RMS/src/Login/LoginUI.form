@@ -69,15 +69,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
-                      <Component id="jDate" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jTime" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="170" max="32767" attributes="0"/>
-                      <Component id="jLabel3" min="-2" pref="225" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jDate" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jTime" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="71" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -100,7 +101,7 @@
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="24" style="1"/>
+                  <Font name="Trajan Pro" size="24" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Welcome TO RMS"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -109,7 +110,7 @@
             <Component class="javax.swing.JLabel" name="jDate">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="1"/>
+                  <Font name="Trajan Pro" size="14" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Date:"/>
               </Properties>
@@ -117,7 +118,7 @@
             <Component class="javax.swing.JLabel" name="jTime">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="1"/>
+                  <Font name="Trajan Pro" size="14" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Time:"/>
               </Properties>
@@ -142,6 +143,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="createAccount" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="loginPassword" max="32767" attributes="0"/>
                               <Component id="loginID" min="-2" pref="200" max="-2" attributes="0"/>
@@ -151,7 +153,7 @@
                               <Component id="loginButton" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="208" max="32767" attributes="0"/>
+                      <EmptySpace pref="288" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -175,6 +177,8 @@
                       <Component id="loginTypeComboBox" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="loginButton" min="-2" pref="39" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="createAccount" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -186,7 +190,7 @@
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="24" style="1"/>
+                  <Font name="Trajan Pro" size="24" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="PASSWORD"/>
               </Properties>
@@ -196,7 +200,7 @@
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="24" style="1"/>
+                  <Font name="Trajan Pro" size="24" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="USER ID"/>
               </Properties>
@@ -204,7 +208,7 @@
             <Component class="javax.swing.JButton" name="loginButton">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="1"/>
+                  <Font name="Trajan Pro" size="14" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="SUBMIT"/>
               </Properties>
@@ -214,6 +218,9 @@
             </Component>
             <Component class="javax.swing.JComboBox" name="loginTypeComboBox">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Trajan Pro" size="13" style="0"/>
+                </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="5">
                     <StringItem index="0" value="ADMIN"/>
@@ -230,6 +237,17 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JButton" name="createAccount">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Trajan Pro" size="13" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Create An Account"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createAccountActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -86,7 +86,7 @@ public final class LoginUI extends javax.swing.JFrame {
             
             try{
                  Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "select * from "+loginType+" WHERE CUSTOMER_ID="+loginID.getText() +" AND PASSWORD ="+loginPassword.getText()+";";
@@ -112,7 +112,7 @@ public final class LoginUI extends javax.swing.JFrame {
             
             try{
                  Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "select * from "+loginType+" WHERE C_ID="+loginID.getText() +" AND PASSWORD ="+loginPassword.getText()+";";
@@ -142,7 +142,7 @@ public final class LoginUI extends javax.swing.JFrame {
             
             try{
                  Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "select * from "+loginType+" WHERE E_ID="+loginID.getText() +" AND PASSWORD ="+loginPassword.getText()+";";
@@ -168,7 +168,7 @@ public final class LoginUI extends javax.swing.JFrame {
             
             try{
                  Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "select * from "+loginType+" WHERE M_ID="+loginID.getText() +" AND PASSWORD ="+loginPassword.getText()+";";
@@ -217,20 +217,21 @@ public final class LoginUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         loginButton = new javax.swing.JButton();
         loginTypeComboBox = new javax.swing.JComboBox<>();
+        createAccount = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(255, 51, 51));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Trajan Pro", 0, 24)); // NOI18N
         jLabel3.setText("Welcome TO RMS");
         jLabel3.setToolTipText("");
 
-        jDate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jDate.setFont(new java.awt.Font("Trajan Pro", 1, 14)); // NOI18N
         jDate.setText("Date:");
 
-        jTime.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTime.setFont(new java.awt.Font("Trajan Pro", 1, 14)); // NOI18N
         jTime.setText("Time:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -239,14 +240,14 @@ public final class LoginUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(127, 127, 127)
-                .addComponent(jDate)
-                .addGap(130, 130, 130)
-                .addComponent(jTime)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(170, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(117, 117, 117))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jDate)
+                        .addGap(130, 130, 130)
+                        .addComponent(jTime)
+                        .addGap(0, 71, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,13 +263,13 @@ public final class LoginUI extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 204));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Trajan Pro", 1, 24)); // NOI18N
         jLabel1.setText("PASSWORD");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Trajan Pro", 1, 24)); // NOI18N
         jLabel2.setText("USER ID");
 
-        loginButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        loginButton.setFont(new java.awt.Font("Trajan Pro", 1, 14)); // NOI18N
         loginButton.setText("SUBMIT");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,10 +277,19 @@ public final class LoginUI extends javax.swing.JFrame {
             }
         });
 
+        loginTypeComboBox.setFont(new java.awt.Font("Trajan Pro", 0, 13)); // NOI18N
         loginTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMIN", "CUSTOMER", "MANEGER", "CASHIER", "EMPLOYEE" }));
         loginTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginTypeComboBoxActionPerformed(evt);
+            }
+        });
+
+        createAccount.setFont(new java.awt.Font("Trajan Pro", 1, 13)); // NOI18N
+        createAccount.setText("Create An Account");
+        createAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createAccountActionPerformed(evt);
             }
         });
 
@@ -294,13 +304,14 @@ public final class LoginUI extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(82, 82, 82)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(createAccount)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(loginPassword)
                         .addComponent(loginID, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(loginTypeComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 103, Short.MAX_VALUE)
                         .addComponent(loginButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(208, Short.MAX_VALUE))
+                .addContainerGap(288, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,6 +330,8 @@ public final class LoginUI extends javax.swing.JFrame {
                 .addComponent(loginTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(createAccount)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -361,8 +374,16 @@ public final class LoginUI extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
         //JOptionPane.showMessageDialog(rootPane,loginTypeComboBox.getSelectedItem().toString());
-        LoginCall(); //TO CALL FUNCTION 10/07/2022 ARONOCK 
+        if(!loginID.getText().isEmpty())
+            LoginCall(); //TO CALL FUNCTION 10/07/2022 ARONOCK 
+        else
+            JOptionPane.showMessageDialog(rootPane,"Fild is empty");
+        
     }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void createAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_createAccountActionPerformed
 
     /**
      * @param args the command line arguments
@@ -398,6 +419,7 @@ public final class LoginUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton createAccount;
     private javax.swing.JLabel jDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

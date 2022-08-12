@@ -114,7 +114,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
     void readFromFoodMenu(){ // This function has been created to read unit price form food menu
         try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "select * from FOOD_MENU WHERE DISH_NAME="+"'"+FoodListComboBox.getSelectedItem().toString()+"'"+";";
@@ -133,7 +133,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
         int Price= Q*uPrice;
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+            Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
             Statement stmt = conn.createStatement();
             String qrry;
             qrry = "INSERT INTO TEMP_BILL VALUES("+"'"+FoodListComboBox.getSelectedItem().toString()+"'"+","+Q+","+uPrice+","+Price+");";
@@ -157,7 +157,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
     void DellTempBill(){ // this will delete item from j table and database
         try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "DELETE from TEMP_BILL WHERE ITEM="+"'"+FoodListComboBox.getSelectedItem().toString()+"'"+"AND QUANTITY="+quantityTextBox.getText()+";";
@@ -181,7 +181,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
         
         try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "select * from TEMP_BILL;";
@@ -203,7 +203,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
     void TotalBIll(){ // Totable bill will calculate using temp bill database 
          try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "SELECT SUM(TOTAL) AS TotalBill FROM TEMP_BILL;";
@@ -246,7 +246,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
         
         try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "INSERT INTO BILLS VALUES("+"'"+CustomerID+"'"+","+"'"+serverID+"'"+","+"'"+id+"'"+","+paid+","+"'"+paymentMethod+"'"+","+Integer.parseInt(year)+","+Integer.parseInt(month)+","+"'"+date+"'"+");";
@@ -268,7 +268,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
     void ToTableS(String serverID,String TableNumber,String CustomerID){
         try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "INSERT INTO TABLE_S VALUES("+"'"+serverID+"'"+","+"'"+TableNumber+"'"+","+"'"+CustomerID+"'"+","+"'"+date+"'"+");";
@@ -290,7 +290,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
     void readFromCustomer(){ // Customer old credite will read
          try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID ="+"'"+OldCustomerID.getText()+"';";
@@ -315,7 +315,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
            //System.out.println("->"+credite);
            try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "UPDATE CUSTOMER SET CREDIT="+sum+"WHERE CUSTOMER_ID ="+"'"+OldCustomerID.getText()+"'"+";";
@@ -336,7 +336,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
            String tempPassword="11111111";
            try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "INSERT INTO CUSTOMER VALUES("+"'"+NewCustomerPhone.getText()+"'"+","+"'"+NewCustomerName.getText()+"'"+","+"'"+NewCustomerPhone.getText()+"'"+","+"'"+NewCustomerAddress.getText()+"'"+","+"'"+tempPassword+"'"+","+tPrice+");";
@@ -358,7 +358,7 @@ public final class BillingSystemUI extends javax.swing.JFrame {
     void DeleteAllTempBIll(){// all data will delete from j table and temp data base
         try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OECCDJF\\SQLEXPRESS;databaseName=RMS","sa","alphacoders4T4");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
                 qrry = "DELETE from TEMP_BILL;";
