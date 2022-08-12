@@ -98,6 +98,9 @@ public final class LoginUI extends javax.swing.JFrame {
                 }
                 if(flag){
                     JOptionPane.showMessageDialog(null, "Successfully Logged In (^_*)");
+                    dispose();
+                    Customer c = new Customer();
+                    c.setVisible(true);
                     //System.out.print(qrry);
                     }
                 else{
