@@ -26,6 +26,10 @@ public final class LoginUI extends javax.swing.JFrame {
     /**
      * Creates new form LoginUI
      */
+    private String Name;
+    private String Phone;
+    private String Address;
+    
     public LoginUI() {
         initComponents();
         showDate(); // To show date 10/07/2022 ARONOCK
@@ -98,9 +102,14 @@ public final class LoginUI extends javax.swing.JFrame {
                 }
                 if(flag){
                     JOptionPane.showMessageDialog(null, "Successfully Logged In (^_*)");
-                    dispose();
+                    cuntomerInfo();
+                    
                     Customer c = new Customer();
+                    c.setName(Name);
+                    c.setAddress(Address);
+                    c.setPhone(Phone);
                     c.setVisible(true);
+                    dispose();
                     //System.out.print(qrry);
                     }
                 else{
@@ -173,7 +182,7 @@ public final class LoginUI extends javax.swing.JFrame {
         else if("MANEGER".equals(loginType)){
             
             try{
-                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
@@ -200,8 +209,28 @@ public final class LoginUI extends javax.swing.JFrame {
         loginID.setText(null);
         loginPassword.setText(null);
     }
-    
-
+    void cuntomerInfo(){
+        try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID ="+"'"+loginID.getText()+"';";
+                ResultSet rs = stmt.executeQuery(qrry);
+                while(rs.next()){
+                    
+                    String MOBILE=rs.getString("PHONE_NO");
+                    Phone=MOBILE;
+                    String NAME=rs.getString("NAME");
+                    Name=NAME;
+                    String ADDRESS=rs.getString("ADDRESS");
+                    Address = ADDRESS;
+                }
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+    }
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -292,7 +321,7 @@ public final class LoginUI extends javax.swing.JFrame {
         });
 
         createAccount.setFont(new java.awt.Font("Trajan Pro", 1, 13)); // NOI18N
-        createAccount.setText("Create An Account");
+        createAccount.setText("Create A customer Account");
         createAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createAccountActionPerformed(evt);
@@ -317,7 +346,7 @@ public final class LoginUI extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(loginTypeComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 103, Short.MAX_VALUE)
                         .addComponent(loginButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(288, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -389,6 +418,9 @@ public final class LoginUI extends javax.swing.JFrame {
 
     private void createAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountActionPerformed
         // TODO add your handling code here:
+        CreateCustomerAccount tmp = new CreateCustomerAccount();
+        tmp.setVisible(true);
+        dispose();
     }//GEN-LAST:event_createAccountActionPerformed
 
     /**

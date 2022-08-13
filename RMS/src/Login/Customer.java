@@ -24,79 +24,46 @@ public class Customer extends javax.swing.JFrame {
     /**
      * Creates new form Customer
      */
+    private String Name;
+    private String Phone;
+    private String Address;
+    Order ord = new Order();
     public Customer() {
         initComponents();
+        Order.setVisible(false);
+        LogOut.setVisible(false);
+        Reservation.setVisible(false);
+        nameTextField.setVisible(false);
+        addressTextField.setVisible(false);
+        phoneTextField.setVisible(false);
     }
-      
-         public Connection con;
-    PreparedStatement pst;
-    
-    public void connect() {
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=assignmentDB;selectMethod=cursor", "sa", "123456");
-
-           
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+      //getter and setter Method for customer
+    public void setName(String Name){
+        this.Name=Name;
+    }
+    public void setPhone(String Phone){
+        this.Phone=Phone;
+    }
+    public void setAddress(String Address){
+        this.Address=Address;
     }
     
-    
-    
-    
-   
-    
-    
-    
-    void connectCustomer(){
-        
-     
-             String Name = nameTextField.getText();
-        String Phone = phoneTextField.getText();
-        String Address = addressTextField.getText();
-        
-        
-        
-       // String Pett = sign();
-        
-       //   System.out.println("hi  "+Pett);    
-       
-        try {
-            PreparedStatement pst = con.prepareStatement("insert into CUSTOMER(CUSTOMER_ID,NAME,PHONE_NO,ADDRESS)values(?,?,?,?)");
-        //    System.out.println(Pett);
-          //  pst.setString(1, petNo);
-          pst.setString(0,Phone);
-            pst.setString(1, Name);
-            pst.setString(2, Phone);
-            pst.setString(3, Address);
-         
-            
-            
-            int k = pst.executeUpdate();
-            
-            if(k==1)
-            {
-                JOptionPane.showMessageDialog(this, "Success");
-              //  petNoField.setText("");
-                    nameTextField.setText(null);
-        phoneTextField.setText(null);
-        addressTextField.setText(null);
-  
-               
-            
-            }
-            else
-                JOptionPane.showMessageDialog(this, "Failed");
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // To make text fild empty
-    
+    public String getName(){
+        return Name;
     }
-
+    
+    public String getPhone(){
+        return Phone;
+    }
+    public String getAddress(){
+        return Address;
+    }
+    
+    void order(){
+        
+        ord.setVisible(true);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -108,78 +75,93 @@ public class Customer extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        MyInfo = new javax.swing.JButton();
         nameTextField = new javax.swing.JTextField();
         phoneTextField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Order = new javax.swing.JButton();
+        LogOut = new javax.swing.JButton();
+        Reservation = new javax.swing.JButton();
         addressTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 255, 153));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Customer");
+        jLabel1.setFont(new java.awt.Font("Trajan Pro", 1, 24)); // NOI18N
+        jLabel1.setText("Customer profile");
+
+        MyInfo.setFont(new java.awt.Font("Trajan Pro", 1, 13)); // NOI18N
+        MyInfo.setText("My Info");
+        MyInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MyInfoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(213, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
                 .addGap(156, 156, 156))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addComponent(MyInfo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(MyInfo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Name:");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Phone:");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Address:");
-
+        nameTextField.setEditable(false);
+        nameTextField.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Trajan Pro", 0, 13))); // NOI18N
         nameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameTextFieldActionPerformed(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setText("Order");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        phoneTextField.setEditable(false);
+        phoneTextField.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Phone", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Trajan Pro", 0, 13))); // NOI18N
+        phoneTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                phoneTextFieldActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton2.setText("Login");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Order.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        Order.setText("Order");
+        Order.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                OrderActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton3.setText("Reservation");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        LogOut.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        LogOut.setText("Log Out");
+        LogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                LogOutActionPerformed(evt);
             }
         });
 
+        Reservation.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        Reservation.setText("Reservation");
+        Reservation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReservationActionPerformed(evt);
+            }
+        });
+
+        addressTextField.setFont(new java.awt.Font("Trajan Pro", 0, 13)); // NOI18N
+        addressTextField.setBorder(javax.swing.BorderFactory.createTitledBorder("Address"));
         addressTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addressTextFieldActionPerformed(evt);
@@ -191,24 +173,20 @@ public class Customer extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(98, 98, 98)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
-                .addGap(38, 38, 38)
+                .addGap(151, 151, 151)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(nameTextField)
                     .addComponent(phoneTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                     .addComponent(addressTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
                 .addGap(62, 62, 62)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Reservation, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                    .addComponent(LogOut, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Order, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
@@ -218,20 +196,17 @@ public class Customer extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
                     .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(Order))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
                     .addComponent(phoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(LogOut))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(95, Short.MAX_VALUE))
+                    .addComponent(Reservation)
+                    .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -240,24 +215,51 @@ public class Customer extends javax.swing.JFrame {
 
     private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
         // TODO add your handling code here:
+        //nameTextField.setText(Name);
+        //System.out.println(Name);
     }//GEN-LAST:event_nameTextFieldActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void OrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderActionPerformed
         // TODO add your handling code here:
-        connectCustomer();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        //System.out.println(Name);
+        order();
+    }//GEN-LAST:event_OrderActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        dispose();
+        LoginUI tmp = new LoginUI();
+        tmp.setVisible(true);
+        ord.setVisible(false);
+    }//GEN-LAST:event_LogOutActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void ReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservationActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_ReservationActionPerformed
 
     private void addressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTextFieldActionPerformed
         // TODO add your handling code here:
+        //addressTextField.setText(Address);
     }//GEN-LAST:event_addressTextFieldActionPerformed
+
+    private void phoneTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneTextFieldActionPerformed
+        // TODO add your handling code here:
+        //phoneTextField.setText(Phone);
+    }//GEN-LAST:event_phoneTextFieldActionPerformed
+
+    private void MyInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MyInfoActionPerformed
+        // TODO add your handling code here:
+        MyInfo.setVisible(false);
+        phoneTextField.setText(Phone);
+        addressTextField.setText(Address);
+        nameTextField.setText(Name);
+        Order.setVisible(true);
+        LogOut.setVisible(true);
+        Reservation.setVisible(true);
+        nameTextField.setVisible(true);
+        addressTextField.setVisible(true);
+        phoneTextField.setVisible(true);
+    }//GEN-LAST:event_MyInfoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -295,14 +297,12 @@ public class Customer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton LogOut;
+    private javax.swing.JButton MyInfo;
+    private javax.swing.JButton Order;
+    private javax.swing.JButton Reservation;
     private javax.swing.JTextField addressTextField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JTextField phoneTextField;
