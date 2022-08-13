@@ -5,16 +5,6 @@
  */
 package Login;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author admin
@@ -62,6 +52,7 @@ public class Customer extends javax.swing.JFrame {
     void order(){
         
         ord.setVisible(true);
+        ord.customer_info(Name, Phone, Address);
         
     }
     /**
