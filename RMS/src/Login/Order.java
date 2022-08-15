@@ -430,6 +430,12 @@ public final class Order extends javax.swing.JFrame {
             }
         });
 
+        quantityTextBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quantityTextBoxActionPerformed(evt);
+            }
+        });
+
         add.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         add.setText("ADD");
         add.addActionListener(new java.awt.event.ActionListener() {
@@ -650,6 +656,10 @@ public final class Order extends javax.swing.JFrame {
         printBill();
         DeleteAllTempBIll();
     }//GEN-LAST:event_orderActionPerformed
+
+    private void quantityTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityTextBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quantityTextBoxActionPerformed
 
     /**
      * @param args the command line arguments
