@@ -22,7 +22,7 @@ public class Customer extends javax.swing.JFrame {
         initComponents();
         Order.setVisible(false);
         LogOut.setVisible(false);
-        Reservation.setVisible(false);
+        Notification.setVisible(false);
         nameTextField.setVisible(false);
         addressTextField.setVisible(false);
         phoneTextField.setVisible(false);
@@ -67,11 +67,12 @@ public class Customer extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         MyInfo = new javax.swing.JButton();
+        FoodGallery = new javax.swing.JButton();
         nameTextField = new javax.swing.JTextField();
         phoneTextField = new javax.swing.JTextField();
         Order = new javax.swing.JButton();
         LogOut = new javax.swing.JButton();
-        Reservation = new javax.swing.JButton();
+        Notification = new javax.swing.JButton();
         addressTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -88,6 +89,14 @@ public class Customer extends javax.swing.JFrame {
             }
         });
 
+        FoodGallery.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        FoodGallery.setText("Food Gallery");
+        FoodGallery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FoodGalleryActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -99,7 +108,9 @@ public class Customer extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(97, 97, 97)
                 .addComponent(MyInfo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(FoodGallery, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                .addGap(130, 130, 130))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,7 +118,9 @@ public class Customer extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(MyInfo)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(MyInfo)
+                    .addComponent(FoodGallery))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -143,11 +156,11 @@ public class Customer extends javax.swing.JFrame {
             }
         });
 
-        Reservation.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        Reservation.setText("Reservation");
-        Reservation.addActionListener(new java.awt.event.ActionListener() {
+        Notification.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        Notification.setText("Notification");
+        Notification.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ReservationActionPerformed(evt);
+                NotificationActionPerformed(evt);
             }
         });
 
@@ -175,7 +188,7 @@ public class Customer extends javax.swing.JFrame {
                     .addComponent(addressTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
                 .addGap(62, 62, 62)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Reservation, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                    .addComponent(Notification, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
                     .addComponent(LogOut, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Order, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
@@ -185,19 +198,25 @@ public class Customer extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Order))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(phoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LogOut))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Reservation)
-                    .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(Order)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(LogOut))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(phoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Notification))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -224,9 +243,11 @@ public class Customer extends javax.swing.JFrame {
         ord.setVisible(false);
     }//GEN-LAST:event_LogOutActionPerformed
 
-    private void ReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservationActionPerformed
+    private void NotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotificationActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ReservationActionPerformed
+        notificationUI tmp= new notificationUI();
+        tmp.setVisible(true);
+    }//GEN-LAST:event_NotificationActionPerformed
 
     private void addressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTextFieldActionPerformed
         // TODO add your handling code here:
@@ -246,11 +267,15 @@ public class Customer extends javax.swing.JFrame {
         nameTextField.setText(Name);
         Order.setVisible(true);
         LogOut.setVisible(true);
-        Reservation.setVisible(true);
+        Notification.setVisible(true);
         nameTextField.setVisible(true);
         addressTextField.setVisible(true);
         phoneTextField.setVisible(true);
     }//GEN-LAST:event_MyInfoActionPerformed
+
+    private void FoodGalleryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FoodGalleryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FoodGalleryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,10 +313,11 @@ public class Customer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton FoodGallery;
     private javax.swing.JButton LogOut;
     private javax.swing.JButton MyInfo;
+    private javax.swing.JButton Notification;
     private javax.swing.JButton Order;
-    private javax.swing.JButton Reservation;
     private javax.swing.JTextField addressTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

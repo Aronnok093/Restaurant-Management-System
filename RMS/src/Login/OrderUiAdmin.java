@@ -159,7 +159,51 @@ public class OrderUiAdmin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
                 } 
     }
-
+    void notificationAccept(){
+        UserID tmp = new UserID();
+        String from=tmp.getterID();
+        try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "INSERT INTO notification VALUES("+"'"+from+"'"+","+"'"+CustomerID+"'"+","+"'"+date+" Your order has been placed.Our Rider Will knock You Soon"+"'"+");";
+                boolean gotResults=stmt.execute(qrry);
+                ResultSet rs = null;
+                if(!gotResults){
+                    System.out.println("No results returned");
+                }
+                else {
+                    rs = stmt.getResultSet();
+                }
+                JOptionPane.showMessageDialog(null,"Done");
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                } 
+    }
+    void notificationCancel(){
+        UserID tmp = new UserID();
+        String from=tmp.getterID();
+        try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "INSERT INTO notification VALUES("+"'"+from+"'"+","+"'"+CustomerID+"'"+","+"'"+date+" sorry Your order has been canceled.Stay with us"+"'"+");";
+                boolean gotResults=stmt.execute(qrry);
+                ResultSet rs = null;
+                if(!gotResults){
+                    System.out.println("No results returned");
+                }
+                else {
+                    rs = stmt.getResultSet();
+                }
+                JOptionPane.showMessageDialog(null,"Done");
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                } 
+    }
+    
     void accept(){
         updateCustomerCredit();
         updateOnlineOrder();
@@ -333,12 +377,14 @@ public class OrderUiAdmin extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         accept();
+        notificationAccept();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
          updateOnlineOrder();
          updateJtable();
+         notificationCancel();
         
     }//GEN-LAST:event_jButton3ActionPerformed
 

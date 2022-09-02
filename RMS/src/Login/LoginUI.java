@@ -77,6 +77,8 @@ public final class LoginUI extends javax.swing.JFrame {
                     adminPanel temp = new adminPanel();
                     temp.setVisible(true);
                     dispose();
+                    UserID tmp=new UserID();
+                    tmp.setterID(loginID.getText());
                     }
                 else{
                     JOptionPane.showMessageDialog(null, "Invalid User-ID or Password (o_O) ");
@@ -111,6 +113,8 @@ public final class LoginUI extends javax.swing.JFrame {
                     c.setVisible(true);
                     dispose();
                     //System.out.print(qrry);
+                    UserID tmp=new UserID();
+                    tmp.setterID(loginID.getText());
                     }
                 else{
                     JOptionPane.showMessageDialog(null, "Invalid User-ID or Password (o_O) ");

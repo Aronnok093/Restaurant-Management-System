@@ -202,3 +202,11 @@ ADD PHONE_NUMBER VARCHAR(255);
 /*adding new colm*/
 ALTER TABLE ONLINE_ORDER
 ADD paymentMethod varchar(255);
+
+
+/* new table for notification*/
+create table notification(
+	_from varchar(255),
+	_to varchar(255),
+	_comment varchar(max)
+);
