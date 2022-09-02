@@ -32,6 +32,7 @@ public final class adminPanel extends javax.swing.JFrame {
     CustomerUIAdmin CustomerUI = new CustomerUIAdmin();
     OrderUiAdmin OrderUi = new OrderUiAdmin();
     CREATE_FOOD_MENU_UI FOOD_MENU = new CREATE_FOOD_MENU_UI();
+    foodGellaryUIAdmin foodGellaryUI = new foodGellaryUIAdmin();
     
     public adminPanel() {
         initComponents();
@@ -119,6 +120,7 @@ public final class adminPanel extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jDate = new javax.swing.JLabel();
         jTime = new javax.swing.JLabel();
+        food_gallery = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -235,6 +237,15 @@ public final class adminPanel extends javax.swing.JFrame {
         jTime.setFont(new java.awt.Font("Trajan Pro", 1, 18)); // NOI18N
         jTime.setText("Time:");
 
+        food_gallery.setBackground(new java.awt.Color(255, 255, 255));
+        food_gallery.setText("Food Gallery");
+        food_gallery.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        food_gallery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                food_galleryActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -248,7 +259,9 @@ public final class adminPanel extends javax.swing.JFrame {
                             .addComponent(jTime))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 153, Short.MAX_VALUE)
+                        .addGap(0, 42, Short.MAX_VALUE)
+                        .addComponent(food_gallery, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -278,7 +291,8 @@ public final class adminPanel extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(food_gallery, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -325,6 +339,7 @@ public final class adminPanel extends javax.swing.JFrame {
         FOOD_MENU.setVisible(false);
         OrderUi.setVisible(false);
         CustomerUI.setVisible(false);
+        foodGellaryUI.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -344,6 +359,11 @@ public final class adminPanel extends javax.swing.JFrame {
        // CustomerUIAdmin tmp = new CustomerUIAdmin();
         CustomerUI.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void food_galleryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_food_galleryActionPerformed
+        // TODO add your handling code here:
+        foodGellaryUI.setVisible(true);
+    }//GEN-LAST:event_food_galleryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,6 +401,7 @@ public final class adminPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Revinue;
     private javax.swing.JTextField TotalOrder;
+    private javax.swing.JButton food_gallery;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

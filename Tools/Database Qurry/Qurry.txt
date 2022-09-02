@@ -210,3 +210,11 @@ create table notification(
 	_to varchar(255),
 	_comment varchar(max)
 );
+
+
+/*NEW TABLE FOR GALLERY*/
+CREATE TABLE GALLERY(
+ID INT IDENTITY(101,1),
+FOOD_NAME VARCHAR(255),
+IMG_PATH VARCHAR(MAX)
+);

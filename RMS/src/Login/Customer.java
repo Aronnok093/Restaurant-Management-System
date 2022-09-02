@@ -20,7 +20,7 @@ public class Customer extends javax.swing.JFrame {
     
     Order ord = new Order();
     notificationUI notifi= new notificationUI();
-    
+    foodGellaryUIAdmin foodGellaryUI = new foodGellaryUIAdmin();
     public Customer() {
         initComponents();
         Order.setVisible(false);
@@ -279,6 +279,8 @@ public class Customer extends javax.swing.JFrame {
 
     private void FoodGalleryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FoodGalleryActionPerformed
         // TODO add your handling code here:
+        foodGellaryUI.hideImgButton();
+        foodGellaryUI.setVisible(true);
     }//GEN-LAST:event_FoodGalleryActionPerformed
 
     /**
