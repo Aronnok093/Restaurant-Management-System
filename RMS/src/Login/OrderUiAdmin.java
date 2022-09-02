@@ -324,12 +324,6 @@ public class OrderUiAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_totalPriceActionPerformed
 
-    private void orderListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderListMouseClicked
-        // TODO add your handling code here:
-        readFromTable(); // read infor
-        
-    }//GEN-LAST:event_orderListMouseClicked
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         accept();
@@ -341,6 +335,12 @@ public class OrderUiAdmin extends javax.swing.JFrame {
          updateJtable();
         
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void orderListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderListMouseClicked
+        // TODO add your handling code here:
+        readFromTable(); // read infor
+
+    }//GEN-LAST:event_orderListMouseClicked
 
     /**
      * @param args the command line arguments
