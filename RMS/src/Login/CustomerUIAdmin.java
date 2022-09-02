@@ -5,17 +5,106 @@
  */
 package Login;
 
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
-public class CustomerUIAdmin extends javax.swing.JFrame {
+public final class CustomerUIAdmin extends javax.swing.JFrame {
 
     /**
      * Creates new form CustomerUIAdmin
      */
     public CustomerUIAdmin() {
         initComponents();
+        updateJtable();
+    }
+    void update(){ // customer data will be updated
+         try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "UPDATE CUSTOMER SET CUSTOMER_ID = "+"'"+Id.getText()+"',NAME = "+"'"+Name.getText()+"',PHONE_NO = "+"'"+Phone.getText()+"',ADDRESS = "+"'"+Address.getText()+"',PASSWORD = "+"'"+pass.getText()+"'"+" WHERE CUSTOMER_ID = "+"'"+Id.getText()+"';";
+                boolean gotResults=stmt.execute(qrry);
+                ResultSet rs = null;
+                if(!gotResults){
+                    System.out.println("No results returned");
+                }
+                else {
+                    rs = stmt.getResultSet();
+                }
+                
+                JOptionPane.showMessageDialog(null,"Update Complete");
+                updateJtable();
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+    }
+    
+    void delete(){
+        try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = "+"'"+Id.getText()+"'"+";";
+                boolean gotResults=stmt.execute(qrry);
+                ResultSet rs = null;
+                if(!gotResults){
+                    System.out.println("No results returned");
+                }
+                else {
+                    rs = stmt.getResultSet();
+                }
+                
+                JOptionPane.showMessageDialog(null,"Delete complete Complete");
+                updateJtable();
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+    }
+     void updateJtable(){ // order list whitch are not accepted
+        DefaultTableModel MenuDetail =(DefaultTableModel)customerJtable.getModel();
+        MenuDetail.setRowCount(0);
+        
+        try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "select * from CUSTOMER ORDER BY CREDIT DESC";
+                ResultSet rs = stmt.executeQuery(qrry);
+                while(rs.next()){
+                    String CUSTOMER_ID = rs.getString("CUSTOMER_ID");
+                    String  NAME = rs.getString("NAME");
+                    String PHONE_NO = rs.getString("PHONE_NO");
+                    String ADDRESS = rs.getString("ADDRESS");
+                    String  PASSWORD = rs.getString("PASSWORD");
+                    String CREDIT = rs.getString("CREDIT");
+
+                    MenuDetail.addRow(new Object[]{CUSTOMER_ID,NAME,PHONE_NO,ADDRESS,PASSWORD,CREDIT});
+                }
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+    }
+    void readFromJtable(){
+         int row = customerJtable.getSelectedRow();
+        DefaultTableModel model =(DefaultTableModel)customerJtable.getModel();
+        Id.setText(model.getValueAt(row,0).toString());
+        Name.setText(model.getValueAt(row,1).toString());
+        Phone.setText(model.getValueAt(row,2).toString());
+        Address.setText(model.getValueAt(row,3).toString());
+        pass.setText(model.getValueAt(row,4).toString());
     }
 
     /**
@@ -30,7 +119,7 @@ public class CustomerUIAdmin extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        customerJtable = new javax.swing.JTable();
         Name = new javax.swing.JTextField();
         Phone = new javax.swing.JTextField();
         Address = new javax.swing.JTextField();
@@ -41,25 +130,32 @@ public class CustomerUIAdmin extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        pass = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 204));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        customerJtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Customer_ID", "Name", "Phone", "Address"
+                "Customer_ID", "Name", "Phone", "Address", "Password", "Credit"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        customerJtable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                customerJtableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(customerJtable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -99,10 +195,27 @@ public class CustomerUIAdmin extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(51, 51, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(255, 0, 0));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        pass.setBorder(javax.swing.BorderFactory.createTitledBorder("Password"));
+        pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -132,7 +245,10 @@ public class CustomerUIAdmin extends javax.swing.JFrame {
                             .addComponent(Id, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(jButton2)
-                                .addGap(35, 35, 35)))))
+                                .addGap(35, 35, 35))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -156,6 +272,8 @@ public class CustomerUIAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Address, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -180,6 +298,26 @@ public class CustomerUIAdmin extends javax.swing.JFrame {
     private void IdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_IdActionPerformed
+
+    private void customerJtableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerJtableMouseClicked
+        // TODO add your handling code here:
+        readFromJtable();
+        
+    }//GEN-LAST:event_customerJtableMouseClicked
+
+    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        update();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        delete();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,6 +359,7 @@ public class CustomerUIAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField Id;
     private javax.swing.JTextField Name;
     private javax.swing.JTextField Phone;
+    private javax.swing.JTable customerJtable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -230,6 +369,6 @@ public class CustomerUIAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField pass;
     // End of variables declaration//GEN-END:variables
 }

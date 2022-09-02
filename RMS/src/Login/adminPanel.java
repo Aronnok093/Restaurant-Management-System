@@ -29,6 +29,10 @@ public final class adminPanel extends javax.swing.JFrame {
     private String Bill_ID;
     private String revineu;
     
+    CustomerUIAdmin CustomerUI = new CustomerUIAdmin();
+    OrderUiAdmin OrderUi = new OrderUiAdmin();
+    CREATE_FOOD_MENU_UI FOOD_MENU = new CREATE_FOOD_MENU_UI();
+    
     public adminPanel() {
         initComponents();
         OrderNO();
@@ -309,8 +313,8 @@ public final class adminPanel extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        CREATE_FOOD_MENU_UI TEMP = new CREATE_FOOD_MENU_UI();
-        TEMP.setVisible(true);             
+        //CREATE_FOOD_MENU_UI TEMP_food = new CREATE_FOOD_MENU_UI();
+        FOOD_MENU.setVisible(true);             
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -318,12 +322,15 @@ public final class adminPanel extends javax.swing.JFrame {
         LoginUI temp = new LoginUI();
         temp.setVisible(true);
         dispose();
+        FOOD_MENU.setVisible(false);
+        OrderUi.setVisible(false);
+        CustomerUI.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        OrderUiAdmin temp = new OrderUiAdmin();
-        temp.setVisible(true);
+        //OrderUiAdmin tempor = new OrderUiAdmin();
+        OrderUi.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -334,6 +341,8 @@ public final class adminPanel extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+       // CustomerUIAdmin tmp = new CustomerUIAdmin();
+        CustomerUI.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

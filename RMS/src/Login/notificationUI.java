@@ -35,7 +35,7 @@ public final class notificationUI extends javax.swing.JFrame {
         UserID tmp = new UserID();
         customerID=tmp.getterID();
     }
-    void UpdateJtable(){
+    void UpdateJtable(){  // inner join between  admin table and notification table
         DefaultTableModel MenuDetail =(DefaultTableModel)notij.getModel();
         MenuDetail.setRowCount(0);
         

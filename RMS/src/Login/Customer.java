@@ -17,7 +17,10 @@ public class Customer extends javax.swing.JFrame {
     private String Name;
     private String Phone;
     private String Address;
+    
     Order ord = new Order();
+    notificationUI notifi= new notificationUI();
+    
     public Customer() {
         initComponents();
         Order.setVisible(false);
@@ -241,12 +244,13 @@ public class Customer extends javax.swing.JFrame {
         LoginUI tmp = new LoginUI();
         tmp.setVisible(true);
         ord.setVisible(false);
+        notifi.setVisible(false);
     }//GEN-LAST:event_LogOutActionPerformed
 
     private void NotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotificationActionPerformed
         // TODO add your handling code here:
-        notificationUI tmp= new notificationUI();
-        tmp.setVisible(true);
+        //notificationUI notifi= new notificationUI();
+        notifi.setVisible(true);
     }//GEN-LAST:event_NotificationActionPerformed
 
     private void addressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTextFieldActionPerformed
