@@ -40,7 +40,7 @@ public final class Order extends javax.swing.JFrame {
     private String CustomerID;
     private String name;
     private String address;
-    private String foodList;
+    private String foodList="temp";
     
     public Order() {
         initComponents();
@@ -181,7 +181,7 @@ public final class Order extends javax.swing.JFrame {
                 }
     }
     
-    void foodList(){ // Order List that will show in J table sory for wrong spelling
+    void foodList(){ // Order List that will store in a string
       
         try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -366,7 +366,7 @@ public final class Order extends javax.swing.JFrame {
                 Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
-                qrry = "INSERT INTO ONLINE_ORDER VALUES("+"'"+CustomerID+"'"+","+"'"+name+"'"+","+"'"+foodList+"'"+","+"'"+"NO"+"'"+","+tPrice+","+"'"+date+"'"+","+"'"+time+"'"+","+"'"+address+"'"+","+"'"+CustomerID+"'"+");";
+                qrry = "INSERT INTO ONLINE_ORDER VALUES("+"'"+CustomerID+"'"+","+"'"+name+"'"+","+"'"+foodList+"'"+","+"'"+"NO"+"'"+","+(tPrice+tPrice*(double)((vat*1.0)/100))+","+"'"+date+"'"+","+"'"+time+"'"+","+"'"+address+"'"+","+"'"+CustomerID+"'"+","+"'"+PaymentMethodComboBox.getSelectedItem().toString()+"'"+");";
                 boolean gotResults=stmt.execute(qrry);
                 ResultSet rs = null;
                 if(!gotResults){
@@ -652,6 +652,7 @@ public final class Order extends javax.swing.JFrame {
     private void orderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderActionPerformed
         // TODO add your handling code here:
         foodList();
+        TotalBIll();
         onlineOrder();
         printBill();
         DeleteAllTempBIll();

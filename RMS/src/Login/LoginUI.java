@@ -74,8 +74,8 @@ public final class LoginUI extends javax.swing.JFrame {
                 if(flag){
                     JOptionPane.showMessageDialog(null, "Successfully Logged In (^_*)");
                     //System.out.print(qrry);
-                    CREATE_FOOD_MENU_UI TEMP = new CREATE_FOOD_MENU_UI();
-                    TEMP.setVisible(true);
+                    adminPanel temp = new adminPanel();
+                    temp.setVisible(true);
                     dispose();
                     }
                 else{
