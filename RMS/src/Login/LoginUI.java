@@ -171,9 +171,14 @@ public final class LoginUI extends javax.swing.JFrame {
                 if(flag){
                     JOptionPane.showMessageDialog(null, "Successfully Logged In (^_*)");
                     //System.out.print(qrry);
-                    dispose();
+                    
                     EmployeeUI emp = new EmployeeUI();
+                    emp.setterID(loginID.getText());
                     emp.setVisible(true);
+                    UserID tmp=new UserID();
+                    tmp.setterID(loginID.getText());
+                    dispose();
+                    
                     }
                 else{
                     JOptionPane.showMessageDialog(null, "Invalid User-ID or Password (o_O) ");
@@ -200,6 +205,8 @@ public final class LoginUI extends javax.swing.JFrame {
                 if(flag){
                     JOptionPane.showMessageDialog(null, "Successfully Logged In (^_*)");
                     //System.out.print(qrry);
+                    UserID tmp=new UserID();
+                    tmp.setterID(loginID.getText());
                     }
                 else{
                     JOptionPane.showMessageDialog(null, "Invalid User-ID or Password (o_O) ");
@@ -380,7 +387,7 @@ public final class LoginUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(

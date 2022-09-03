@@ -5,6 +5,15 @@
  */
 package Login;
 
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -16,7 +25,84 @@ public class EmployeeUIAdmin extends javax.swing.JFrame {
      */
     public EmployeeUIAdmin() {
         initComponents();
+        updateJtable();
     }
+    void update(){ // customer data will be updated
+         try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "UPDATE EMPLOYEE SET E_ID = "+"'"+Id.getText()+"',NAME = "+"'"+Name.getText()+"',PHONE_NUMBER = "+"'"+Phone.getText()+"',PASSWORD = "+"'"+pass.getText()+"'"+" WHERE E_ID = "+"'"+Id.getText()+"';";
+                boolean gotResults=stmt.execute(qrry);
+                ResultSet rs = null;
+                if(!gotResults){
+                    System.out.println("No results returned");
+                }
+                else {
+                    rs = stmt.getResultSet();
+                }
+                
+                JOptionPane.showMessageDialog(null,"Update Complete");
+                updateJtable();
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+    }
+    
+    void delete(){
+        try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "DELETE FROM EMPLOYEE WHERE E_ID = "+"'"+Id.getText()+"'"+";";
+                boolean gotResults=stmt.execute(qrry);
+                ResultSet rs = null;
+                if(!gotResults){
+                    System.out.println("No results returned");
+                }
+                else {
+                    rs = stmt.getResultSet();
+                }
+                
+                JOptionPane.showMessageDialog(null,"Delete complete Complete");
+                updateJtable();
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+    }
+     void updateJtable(){ // order list whitch are not accepted
+        DefaultTableModel MenuDetail =(DefaultTableModel)jTable.getModel();
+        MenuDetail.setRowCount(0);
+        
+        try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "select * from EMPLOYEE";
+                ResultSet rs = stmt.executeQuery(qrry);
+                while(rs.next()){
+                    String E_ID = rs.getString("E_ID");
+                    String  NAME = rs.getString("NAME");
+                    String PHONE_NO = rs.getString("PHONE_NUMBER");
+                    String  PASSWORD = rs.getString("PASSWORD");
+                    MenuDetail.addRow(new Object[]{E_ID,NAME,PHONE_NO,PASSWORD});
+                }
+            }catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
+                }
+    }
+    void readFromJtable(){
+        int row = jTable.getSelectedRow();
+        DefaultTableModel model =(DefaultTableModel)jTable.getModel();
+        Id.setText(model.getValueAt(row,0).toString());
+        Name.setText(model.getValueAt(row,1).toString());
+        Phone.setText(model.getValueAt(row,2).toString());
+        pass.setText(model.getValueAt(row,3).toString());
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,17 +116,17 @@ public class EmployeeUIAdmin extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
         Name = new javax.swing.JTextField();
         Phone = new javax.swing.JTextField();
-        Address = new javax.swing.JTextField();
+        pass = new javax.swing.JTextField();
         Id = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        update = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,7 +134,7 @@ public class EmployeeUIAdmin extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,7 +145,12 @@ public class EmployeeUIAdmin extends javax.swing.JFrame {
                 "Employee_ID", "Name", "Phone", "Password"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -96,13 +187,23 @@ public class EmployeeUIAdmin extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Password");
 
-        jButton1.setBackground(new java.awt.Color(51, 51, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("Update");
+        update.setBackground(new java.awt.Color(51, 51, 255));
+        update.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        update.setText("Update");
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateActionPerformed(evt);
+            }
+        });
 
-        jButton2.setBackground(new java.awt.Color(255, 0, 0));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setText("Delete");
+        delete.setBackground(new java.awt.Color(255, 0, 0));
+        delete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -114,7 +215,7 @@ public class EmployeeUIAdmin extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Address, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -125,13 +226,13 @@ public class EmployeeUIAdmin extends javax.swing.JFrame {
                         .addComponent(Phone, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
+                            .addComponent(update)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Id, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButton2)
+                                .addComponent(delete)
                                 .addGap(35, 35, 35)))))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -154,12 +255,12 @@ public class EmployeeUIAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Address, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(update)
+                    .addComponent(delete))
                 .addGap(75, 75, 75))
         );
 
@@ -180,6 +281,21 @@ public class EmployeeUIAdmin extends javax.swing.JFrame {
     private void IdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_IdActionPerformed
+
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        // TODO add your handling code here:
+        readFromJtable();
+    }//GEN-LAST:event_jTableMouseClicked
+
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+        // TODO add your handling code here:
+        update();
+    }//GEN-LAST:event_updateActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        // TODO add your handling code here:
+        delete();
+    }//GEN-LAST:event_deleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -217,12 +333,10 @@ public class EmployeeUIAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Address;
     private javax.swing.JTextField Id;
     private javax.swing.JTextField Name;
     private javax.swing.JTextField Phone;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton delete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -230,6 +344,8 @@ public class EmployeeUIAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable;
+    private javax.swing.JTextField pass;
+    private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }

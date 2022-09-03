@@ -20,7 +20,8 @@ public class UserID extends javax.swing.JFrame {
         UserID.id=id;
     }
     String getterID(){
-        return id;
+       // System.out.println(id);
+        return id; 
     }
     public UserID() {
         initComponents();
