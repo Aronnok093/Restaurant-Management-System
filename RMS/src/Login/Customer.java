@@ -244,7 +244,9 @@ public class Customer extends javax.swing.JFrame {
         LoginUI tmp = new LoginUI();
         tmp.setVisible(true);
         ord.setVisible(false);
+        ord.dispose();
         notifi.setVisible(false);
+        notifi.dispose();
     }//GEN-LAST:event_LogOutActionPerformed
 
     private void NotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotificationActionPerformed

@@ -35,6 +35,8 @@ public final class adminPanel extends javax.swing.JFrame {
     foodGellaryUIAdmin foodGellaryUI = new foodGellaryUIAdmin();
     EmployeeUIAdmin EmployeeUI = new EmployeeUIAdmin();
     SalaryUIAdmin SalaryUI = new SalaryUIAdmin();
+    ManagerUIAdmin ManagerUI = new ManagerUIAdmin();
+    AdminModification AdminModifi = new AdminModification();
     public adminPanel() {
         initComponents();
         OrderNO();
@@ -197,6 +199,11 @@ public final class adminPanel extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setText("ADMIN");
         jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setText("ORDER");
@@ -226,7 +233,7 @@ public final class adminPanel extends javax.swing.JFrame {
         });
 
         jButton6.setBackground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Employee info");
+        jButton6.setText("Employee Info");
         jButton6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,8 +242,13 @@ public final class adminPanel extends javax.swing.JFrame {
         });
 
         jButton7.setBackground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Cashier");
+        jButton7.setText("Manager Info");
         jButton7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jDate.setFont(new java.awt.Font("Trajan Pro", 1, 18)); // NOI18N
         jDate.setText("Date:");
@@ -361,11 +373,21 @@ public final class adminPanel extends javax.swing.JFrame {
         temp.setVisible(true);
         dispose();
         FOOD_MENU.setVisible(false);
+        FOOD_MENU.dispose();
         OrderUi.setVisible(false);
+        OrderUi.dispose();
         CustomerUI.setVisible(false);
+        CustomerUI.dispose();
         foodGellaryUI.setVisible(false);
+        foodGellaryUI.dispose();
         EmployeeUI.setVisible(false);
+        EmployeeUI.dispose();
         SalaryUI.setVisible(false);
+        SalaryUI.dispose();
+        ManagerUI.setVisible(false);
+        ManagerUI.dispose();
+        AdminModifi.setVisible(false);
+        dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -398,8 +420,19 @@ public final class adminPanel extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
+        SalaryUI.hideLogOutButton();
         SalaryUI.setVisible(true);
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        ManagerUI.setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here
+        AdminModifi.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

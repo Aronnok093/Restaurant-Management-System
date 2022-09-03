@@ -142,7 +142,9 @@ public class EmployeeUI extends javax.swing.JFrame {
         temp.setVisible(true);
         dispose();
         Employeesa.setVisible(false);
+        Employeesa.dispose();
         EmployHis.setVisible(false);
+        EmployHis.dispose();
     }//GEN-LAST:event_LogoutActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

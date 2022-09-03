@@ -16,18 +16,19 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Admin
+ * @author kfard
  */
-public class ManagerUIAdmin extends javax.swing.JFrame {
+public class AdminModification extends javax.swing.JFrame {
 
     /**
-     * Creates new form ManagerUIAdmin
+     * Creates new form AdminModification
      */
-    public ManagerUIAdmin() {
+    public AdminModification() {
         initComponents();
         updateJtable();
     }
-     void Refresh(){
+    
+    void Refresh(){
          updateJtable();
     }
     void update(){ // customer data will be updated
@@ -36,7 +37,7 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
                 Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
-                qrry = "UPDATE MANEGER SET M_ID = "+"'"+Id.getText()+"',NAME = "+"'"+Name.getText()+"',PHONE_NUMBER = "+"'"+Phone.getText()+"',PASSWORD = "+"'"+pass.getText()+"'"+" WHERE M_ID = "+"'"+Id.getText()+"';";
+                qrry = "UPDATE ADMIN SET A_ID = "+"'"+Id.getText()+"',NAME = "+"'"+Name.getText()+"',PHONE_NUMBER = "+"'"+Phone.getText()+"',PASSWORD = "+"'"+pass.getText()+"'"+" WHERE A_ID = "+"'"+Id.getText()+"';";
                 boolean gotResults=stmt.execute(qrry);
                 ResultSet rs = null;
                 if(!gotResults){
@@ -59,7 +60,7 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
                 Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
-                qrry = "DELETE FROM MANEGER WHERE M_ID = "+"'"+Id.getText()+"'"+";";
+                qrry = "DELETE FROM ADMIN WHERE A_ID = "+"'"+Id.getText()+"'"+";";
                 boolean gotResults=stmt.execute(qrry);
                 ResultSet rs = null;
                 if(!gotResults){
@@ -75,6 +76,29 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
                 }
     }
+    
+    void addAdmin(){
+        try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
+                Statement stmt = conn.createStatement();
+                String qrry;
+                qrry = "INSERT INTO ADMIN (A_ID,NAME,PHONE_NUMBER,PASSWORD) VALUES("+"'"+Id.getText()+"'"+","+"'"+Name.getText()+"'"+","+"'"+Phone.getText()+"'"+","+"'"+pass.getText()+"'"+");";
+                boolean gotResults=stmt.execute(qrry);
+                ResultSet rs = null;
+                if(!gotResults){
+                    System.out.println("No results returned");
+                }
+                else {
+                    rs = stmt.getResultSet();
+                    }
+
+                JOptionPane.showMessageDialog(rootPane,"Salary ADDED");
+
+            }catch(ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(rootPane,ex);
+            }
+    }
      void updateJtable(){ // order list whitch are not accepted
         DefaultTableModel MenuDetail =(DefaultTableModel)jTable.getModel();
         MenuDetail.setRowCount(0);
@@ -84,10 +108,10 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
                 Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
                 Statement stmt = conn.createStatement();
                 String qrry;
-                qrry = "select * from MANEGER";
+                qrry = "select * from ADMIN";
                 ResultSet rs = stmt.executeQuery(qrry);
                 while(rs.next()){
-                    String E_ID = rs.getString("M_ID");
+                    String E_ID = rs.getString("A_ID");
                     String  NAME = rs.getString("NAME");
                     String PHONE_NO = rs.getString("PHONE_NUMBER");
                     String  PASSWORD = rs.getString("PASSWORD");
@@ -127,10 +151,11 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        update = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        delete1 = new javax.swing.JButton();
+        refresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -146,9 +171,14 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Manager_ID", "Name", "Phone", "Password"
+                "Employee_ID", "Name", "Phone", "Password"
             }
         ));
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -175,7 +205,7 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Manager_ID");
+        jLabel1.setText("Admin ID");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Name");
@@ -186,36 +216,45 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Password");
 
-        jButton1.setBackground(new java.awt.Color(51, 51, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("Update");
+        update.setBackground(new java.awt.Color(51, 51, 255));
+        update.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        update.setText("Update");
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateActionPerformed(evt);
+            }
+        });
+
+        delete.setBackground(new java.awt.Color(255, 0, 0));
+        delete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
+
+        jButton1.setBackground(new java.awt.Color(255, 255, 153));
+        jButton1.setText("Back");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 0, 0));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setText("Delete");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        delete1.setBackground(new java.awt.Color(153, 0, 153));
+        delete1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        delete1.setText("ADD NEW");
+        delete1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                delete1ActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 153));
-        jButton3.setText("Back");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        refresh.setText("REFRESH");
+        refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("REFRESH");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                refreshActionPerformed(evt);
             }
         });
 
@@ -228,7 +267,7 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                         .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -240,18 +279,22 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
                         .addComponent(Phone, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
+                            .addComponent(update)
                             .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Id, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addGap(35, 35, 35))))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(delete1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(delete)
+                                .addGap(35, 35, 35))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(0, 26, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(refresh)
+                                    .addComponent(Id, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(88, 88, 88)
-                        .addComponent(jButton4)
+                        .addComponent(jButton1)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -262,8 +305,8 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButton1)
+                    .addComponent(refresh))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Id, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,8 +325,9 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(update)
+                    .addComponent(delete)
+                    .addComponent(delete1))
                 .addGap(75, 75, 75))
         );
 
@@ -301,29 +345,39 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        // TODO add your handling code here:
+        readFromJtable();
+    }//GEN-LAST:event_jTableMouseClicked
+
     private void IdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_IdActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
-        dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+        update();
+    }//GEN-LAST:event_updateActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        // TODO add your handling code here:
+        delete();
+    }//GEN-LAST:event_deleteActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        update();
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void delete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete1ActionPerformed
         // TODO add your handling code here:
-        delete();
-    }//GEN-LAST:event_jButton2ActionPerformed
+        addAdmin();
+    }//GEN-LAST:event_delete1ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
         // TODO add your handling code here:
         Refresh();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_refreshActionPerformed
 
     /**
      * @param args the command line arguments
@@ -342,20 +396,20 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManagerUIAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminModification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManagerUIAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminModification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManagerUIAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminModification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManagerUIAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminModification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManagerUIAdmin().setVisible(true);
+                new AdminModification().setVisible(true);
             }
         });
     }
@@ -364,10 +418,9 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField Id;
     private javax.swing.JTextField Name;
     private javax.swing.JTextField Phone;
+    private javax.swing.JButton delete;
+    private javax.swing.JButton delete1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -377,5 +430,7 @@ public class ManagerUIAdmin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable;
     private javax.swing.JTextField pass;
+    private javax.swing.JButton refresh;
+    private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }
