@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author kfard
  */
-public class AdminModification extends javax.swing.JFrame {
+public final class AdminModification extends javax.swing.JFrame {
 
     /**
      * Creates new form AdminModification
@@ -31,7 +31,7 @@ public class AdminModification extends javax.swing.JFrame {
     void Refresh(){
          updateJtable();
     }
-    void update(){ // customer data will be updated
+    void update(){ // ADMIN data will be updated NOTE CANT UPDATE ID BC ITS PRIMARY KEY
          try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
@@ -54,7 +54,7 @@ public class AdminModification extends javax.swing.JFrame {
                 }
     }
     
-    void delete(){
+    void delete(){ // ADMIN DATA WILL DELETE
         try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
@@ -77,7 +77,7 @@ public class AdminModification extends javax.swing.JFrame {
                 }
     }
     
-    void addAdmin(){
+    void addAdmin(){ // FOR NEW ADMIN
         try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
@@ -121,7 +121,7 @@ public class AdminModification extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Error in Connectivity "+ex);
                 }
     }
-    void readFromJtable(){
+    void readFromJtable(){ // JTABLE TO TEXT BOX
         int row = jTable.getSelectedRow();
         DefaultTableModel model =(DefaultTableModel)jTable.getModel();
         Id.setText(model.getValueAt(row,0).toString());
@@ -171,7 +171,7 @@ public class AdminModification extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Employee_ID", "Name", "Phone", "Password"
+                "ADMIN ID", "Name", "Phone", "Password"
             }
         ));
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
