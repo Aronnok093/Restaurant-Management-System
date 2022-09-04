@@ -66,7 +66,7 @@ public class CreateCustomerAccount extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection ("jdbc:sqlserver://localhost:1433; databaseName=RMS; user=sa; password=123456");
             Statement stmt = conn.createStatement();
             String qrry;
-            qrry = "INSERT INTO CUSTOMER VALUES("+"'"+MOBILE.getText()+"'"+","+"'"+USER_NAME.getText()+"'"+","+"'"+MOBILE.getText()+"'"+","+"'"+ADDRESS.getText()+"'"+","+"'"+PASSWORD.getText()+"'"+","+null+");";
+            qrry = "INSERT INTO CUSTOMER VALUES("+"'"+MOBILE.getText()+"'"+","+"'"+USER_NAME.getText()+"'"+","+"'"+MOBILE.getText()+"'"+","+"'"+ADDRESS.getText()+"'"+","+"'"+PASSWORD.getText()+"'"+","+0+");";
             boolean gotResults=stmt.execute(qrry);
             ResultSet rs = null;
             if(!gotResults){
